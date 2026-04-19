@@ -1,11 +1,19 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
+  "dependencies": {
+    "express": "^4.x",
+    "mongoose": "^x.x",
+    "cors": "^2.x",
+    "dotenv": "^x.x",
+    "multer": "^x.x",
+    "pdfkit": "^x.x"
+  }
+}
   "keywords": [],
   "author": "",
   "license": "ISC",

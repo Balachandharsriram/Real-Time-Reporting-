@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import "./App.css";
-
+const API = process.env.REACT_APP_API_URL;
 export default function Dashboard({ goBack }) {
   const [reports, setReports] = useState([]);
   const [previewUrl, setPreviewUrl] = useState(null);
@@ -9,7 +9,7 @@ export default function Dashboard({ goBack }) {
   /* ================= FETCH REPORTS ================= */
   const fetchReports = useCallback(async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/reports");
+      const res = await axios.get(`${API}/api/reports`);
       setReports(res.data);
     } catch (err) {
       console.error("Fetch Error:", err);
@@ -24,9 +24,9 @@ export default function Dashboard({ goBack }) {
   const downloadPDF = async (id) => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/reports/${id}/download`,
-        { responseType: "blob" }
-      );
+  `${API}/api/reports/${id}/download`,
+  { responseType: "blob" }
+);
 
       const url = window.URL.createObjectURL(new Blob([res.data]));
       const link = document.createElement("a");
@@ -43,9 +43,9 @@ export default function Dashboard({ goBack }) {
   const previewPDF = async (id) => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/reports/${id}/download`,
-        { responseType: "blob" }
-      );
+  `${API}/api/reports/${id}/download`,
+  { responseType: "blob" }
+);
 
       const file = new Blob([res.data], { type: "application/pdf" });
       const fileURL = URL.createObjectURL(file);
@@ -62,7 +62,7 @@ export default function Dashboard({ goBack }) {
     if (!window.confirm("Delete this report?")) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/reports/${id}`);
+      await axios.delete(`${API}/api/reports/${id}`);
       fetchReports();
     } catch (err) {
       console.error("Delete Error:", err);

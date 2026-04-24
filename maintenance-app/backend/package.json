@@ -5,18 +5,10 @@
   "scripts": {
     "start": "node server.js"
   },
-  "dependencies": {
-    "express": "^4.x",
-    "mongoose": "^x.x",
-    "cors": "^2.x",
-    "dotenv": "^x.x",
-    "multer": "^x.x",
-    "pdfkit": "^x.x"
-  }
-
   "keywords": [],
   "author": "",
   "license": "ISC",
+  
   "dependencies": {
     "cloudinary": "^2.9.0",
     "cors": "^2.8.6",

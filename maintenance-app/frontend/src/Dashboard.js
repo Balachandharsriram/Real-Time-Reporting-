@@ -19,7 +19,7 @@ export default function Dashboard({ goBack }) {
     } catch (err) {
       console.error("Fetch Error:", err);
     }
-  }, [API]);
+  }, [ ]);
 
   useEffect(() => {
     fetchReports();
@@ -140,6 +140,9 @@ export default function Dashboard({ goBack }) {
           Back to Form
         </button>
       </div>
+router.get("/", getReports);
+router.delete("/:id", deleteReport);
+router.get("/:id/download", downloadReport);
 
       {/* ================= MODAL PREVIEW ================= */}
       {previewUrl && (

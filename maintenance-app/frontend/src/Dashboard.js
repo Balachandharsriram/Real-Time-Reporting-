@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import "./App.css";
-const API = process.env.REACT_APP_API_URL;
+const API = process.env.REACT_APP_API_URL || "https://real-time-reporting.onrender.com/";;
 export default function Dashboard({ goBack }) {
   const [reports, setReports] = useState([]);
   const [previewUrl, setPreviewUrl] = useState(null);

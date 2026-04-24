@@ -1,21 +1,26 @@
 import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import "./App.css";
+
 export default function Dashboard({ goBack }) {
   const [reports, setReports] = useState([]);
   const [previewUrl, setPreviewUrl] = useState(null);
 
-  /* ================= FETCH REPORTS ================= */
-const API = process.env.REACT_APP_API_URL || "https://real-time-reporting.onrender.com";
+  /* ================= API ================= */
+  const API =
+    process.env.REACT_APP_API_URL ||
+    "https://real-time-reporting.onrender.com";
 
-const fetchReports = useCallback(async () => {
-  try {
-    const res = await axios.get(`${API}/api/reports`);
-    setReports(res.data);
-  } catch (err) {
-    console.error("Fetch Error:", err);
-  }
-}, []);
+  /* ================= FETCH REPORTS ================= */
+  const fetchReports = useCallback(async () => {
+    try {
+      const res = await axios.get(`${API}/api/reports`);
+      setReports(res.data || []);
+    } catch (err) {
+      console.error("Fetch Error:", err);
+    }
+  }, [API]);
+
   useEffect(() => {
     fetchReports();
   }, [fetchReports]);
@@ -24,9 +29,9 @@ const fetchReports = useCallback(async () => {
   const downloadPDF = async (id) => {
     try {
       const res = await axios.get(
-  `${API}/api/reports/${id}/download`,
-  { responseType: "blob" }
-);
+        `${API}/api/reports/${id}/download`,
+        { responseType: "blob" }
+      );
 
       const url = window.URL.createObjectURL(new Blob([res.data]));
       const link = document.createElement("a");
@@ -43,9 +48,9 @@ const fetchReports = useCallback(async () => {
   const previewPDF = async (id) => {
     try {
       const res = await axios.get(
-  `${API}/api/reports/${id}/download`,
-  { responseType: "blob" }
-);
+        `${API}/api/reports/${id}/download`,
+        { responseType: "blob" }
+      );
 
       const file = new Blob([res.data], { type: "application/pdf" });
       const fileURL = URL.createObjectURL(file);
@@ -89,17 +94,20 @@ const fetchReports = useCallback(async () => {
             </thead>
 
             <tbody>
-              {reports.map((r) => (
+              {(reports || []).map((r) => (
                 <tr key={r._id}>
                   <td>{r.siteName}</td>
                   <td>{r.workType}</td>
                   <td>{r.priority}</td>
                   <td>{r.status}</td>
-                  <td>{r.dateTime}</td>
+                  <td>
+                    {r.dateTime
+                      ? new Date(r.dateTime).toLocaleString()
+                      : "-"}
+                  </td>
 
                   <td>
                     <div className="actions">
-
                       <button
                         className="btn btn-preview"
                         onClick={() => previewPDF(r._id)}
@@ -120,7 +128,6 @@ const fetchReports = useCallback(async () => {
                       >
                         Delete
                       </button>
-
                     </div>
                   </td>
                 </tr>
@@ -138,17 +145,12 @@ const fetchReports = useCallback(async () => {
       {previewUrl && (
         <div className="modal-overlay">
           <div className="modal">
-
             <div className="modal-header">
               <h3>Report Preview</h3>
               <button onClick={() => setPreviewUrl(null)}>Close</button>
             </div>
 
-            <iframe
-              src={previewUrl}
-              title="PDF Preview"
-            />
-
+            <iframe src={previewUrl} title="PDF Preview" />
           </div>
         </div>
       )}

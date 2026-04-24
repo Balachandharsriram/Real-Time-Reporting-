@@ -1,13 +1,14 @@
 import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import "./App.css";
-const API = process.env.REACT_APP_API_URL || "https://real-time-reporting.onrender.com";
 export default function Dashboard({ goBack }) {
   const [reports, setReports] = useState([]);
   const [previewUrl, setPreviewUrl] = useState(null);
 
   /* ================= FETCH REPORTS ================= */
- const fetchReports = useCallback(async () => {
+const API = process.env.REACT_APP_API_URL || "https://real-time-reporting.onrender.com";
+
+const fetchReports = useCallback(async () => {
   try {
     const res = await axios.get(`${API}/api/reports`);
     setReports(res.data);

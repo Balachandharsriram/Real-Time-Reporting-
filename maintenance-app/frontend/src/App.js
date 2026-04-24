@@ -72,7 +72,7 @@ export default function App() {
       );
 
       const res = await axios.post(
-        "http://localhost:5000/api/reports",
+        "https://real-time-reporting.onrender.com/api",
         data,
         {
           headers: { "Content-Type": "multipart/form-data" },

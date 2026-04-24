@@ -7,7 +7,7 @@ export default function Dashboard({ goBack }) {
   const [previewUrl, setPreviewUrl] = useState(null);
 
   /* ================= FETCH REPORTS ================= */
-  const fetchReports = useCallback(async () => {
+ const fetchReports = useCallback(async () => {
   try {
     const res = await axios.get(`${API}/api/reports`);
     setReports(res.data);
@@ -15,7 +15,6 @@ export default function Dashboard({ goBack }) {
     console.error("Fetch Error:", err);
   }
 }, []);
-
   useEffect(() => {
     fetchReports();
   }, [fetchReports]);

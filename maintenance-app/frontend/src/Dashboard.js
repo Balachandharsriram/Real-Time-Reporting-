@@ -14,7 +14,7 @@ export default function Dashboard({ goBack }) {
   } catch (err) {
     console.error("Fetch Error:", err);
   }
-}, [API]);
+}, []);
 
   useEffect(() => {
     fetchReports();
